@@ -1,0 +1,5 @@
+<div class="student">
+	<h2><%= student_name(student) %></h2>
+	<p> <%= student_email(student) %></p>
+	<%= link_to "Edit", edit_student_path(student) %>, <%= link_to "Delete", student, method: :delete, data: { confirm: "Are you sure you want to delete this student?" } %>\
+</div>

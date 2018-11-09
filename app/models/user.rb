@@ -2,7 +2,7 @@ class User < ApplicationRecord
 	#associations
 	has_many :students
 	has_many :meetings
-	has_many :locations, through: meetings
+	has_many :locations, through: :meetings
 
 
   # Include default devise modules. Others available are:
