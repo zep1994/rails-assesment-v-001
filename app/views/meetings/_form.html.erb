@@ -11,12 +11,12 @@
 	</p>
 	<p>
 		<%= label_tag "meeting[meeting_time][date]", "Date: " %>
-		<%= date_field_tag "meeting[meeting_time][date]", meeting.date %>
+		<%= date_field_tag "meeting[meeting_time][date]", meeting_date(meeting) %>
 	</p>
 	<p id="time">
 		<%= label_tag "meeting[meeting_time][date]", "Time: " %>
-		<%= hour_selector("meeting[meeting_time][hour]") %> : 
-		<%= min_selector("meeting[meeting_time][min]") %> 
+		<%= hour_selector("meeting[meeting_time][hour]", meeting) %> : 
+		<%= min_selector("meeting[meeting_time][min]", meeting) %> 
 	</p>
 		 <p><%= f.label :duration %>: <%= duration_field("meeting[duration]") %></p>
 		 <p><%= f.submit %></p>

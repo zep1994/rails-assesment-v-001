@@ -1,0 +1,3 @@
+<h1>Edit Appointment</h1>
+<%= render partial: "form", locals: { meeting: @meeting } %>
+<p>  <%= link_to "Delete", @meeting, method: :delete, data: { confirm: "Are you sure you want to delete this meeting?" } %></p>
