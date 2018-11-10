@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   resources :locations
 
   resources :students do 
-	resources :meetings 
+	resources :meetings, only: [:index, :show, :new]
   end
   devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
 	

@@ -2,7 +2,7 @@ class Meeting < ApplicationRecord
 	#associations
 	belongs_to :location
 	belongs_to :user
-	belongs_to :client
+	belongs_to :student
 
 	accepts_nested_attributes_for :student
 

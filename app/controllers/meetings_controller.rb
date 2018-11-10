@@ -1,6 +1,7 @@
 class MeetingsController < ApplicationController
 	before_action :authenticate_user!
 	before_action :set_meeting, only: [:show, :edit, :update, :destroy]
+	before_action :set_student, only: [:index, :new, :edit]
 
 	def index
 		@meetings = current_user.meetings
@@ -52,13 +53,17 @@ class MeetingsController < ApplicationController
 		end 
 	end
 
+	def set_student 
+		@student = current_user.students.find_by(id: params[:student_id])
+	end 
+
 	def meeting_params
 		time_keys = params[:meeting].try(:fetch, :meeting_time, {}).keys
 		params.require(:meeting).permit(:student_id, :duration, meeting_time: time_keys )
 	end
 
 	def new_student_params 
-		params.require(:meeting).permit(:client_id, :duration, :location_id, location_attributes: [:nickname], client_attributes: [:name], meeting_time: time_keys))
+		params.require(:meeting).permit(:client_id, :duration, :location_id, location_attributes: [:nickname], client_attributes: [:name], meeting_time: time_keys)
 	end 
 
 	def parse_time(array)

@@ -1,5 +1,14 @@
 module MeetingsFormHelper
 
+	def student_fields(form, meeting, student)
+		if student 
+			result = [content_tag(:h3, "with #{student.name}"), hidden_field_tag("meeting[student_id]", student.id)]
+			safe_join(result)
+		else 
+			render partial: "student_fields", locals: { f: form, meeting: meeting }
+		end 
+	end
+
 	def meeting_date(meeting)
 		 if meeting.meeting_time
 			meeting.meeting_time.strftime("%m/%e/%Y")
