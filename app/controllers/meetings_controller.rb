@@ -38,7 +38,7 @@ class MeetingsController < ApplicationController
 
 			redirect_to meeting_path(@meeting)
 		else 
-			
+			set_meetings
 			render :edit 
 		end 
 	end
@@ -52,6 +52,10 @@ class MeetingsController < ApplicationController
 			redirect_to meetings_path
 		end 
 	end
+
+	def set_meetings 
+		@meetings = current_user.meetings.order(meeting_time: :desc)
+	end 
 
 	def set_student 
 		@student = current_user.students.find_by(id: params[:student_id])

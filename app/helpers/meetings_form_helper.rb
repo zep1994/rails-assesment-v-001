@@ -11,9 +11,9 @@ module MeetingsFormHelper
 
 	def meeting_date(meeting)
 		 if meeting.meeting_time
-			meeting.meeting_time.strftime("%m/%e/%Y")
+			meeting.meeting_time.strftime("%m/%d/%Y")
 		 else
-			 Time.now.strftime("%Y/%m/%e")
+			 Time.now.strftime("%m/%d/%Y")
 		end
 	 end
 

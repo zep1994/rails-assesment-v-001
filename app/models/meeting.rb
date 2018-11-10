@@ -31,13 +31,14 @@ class Meeting < ApplicationRecord
 		location.name 
 	end 
 
-	def meeting_time=(time)
-		if time.is_a?(Hash)
-			write_attribute(:meeting_time, parse_datetime(time))
-		else
-			write_attribute(:meeting_time, time)
-		end
-	end
+	 def meeting_time=(time)
+    if time.is_a?(Hash)
+      self[:meeting_time] = parse_datetime(time) 
+    else
+      self[:meeting_time] = time
+    end
+  end
+  
 
 	def end_time 
 		meeting_time + duration.seconds 
@@ -51,10 +52,21 @@ class Meeting < ApplicationRecord
 
 	def parse_datetime(hash)
 		if hash["date"].match(/\d{2}\/\d{2}\/\d{4}/)
-			Time.zone.parse("#{parse_date(hash["date"])} #{hash["hour"]}:#{hash["min"]}")
-		 end
-	end
+          Time.zone.parse("#{parse_date(hash["date"])} #{hash["hour"]}:#{hash["min"]}")
+        end
+	end 
 
+    def duration=(duration) 
+      if duration.is_a?(Hash)
+       self[:duration] = parse_duration(duration)
+      else 
+        self[:duration] = duration
+      end
+    end
+  
+    def parse_duration(hash)
+      hash["hour"].to_i + hash["min"].to_i
+    end
 
 	def parse_time(hash)
 		 DateTime.parse(parse_date(hash["date"]) + " " + hash["hour"] + ":" + hash["min"])
