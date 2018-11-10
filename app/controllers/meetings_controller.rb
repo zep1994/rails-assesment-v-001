@@ -1,17 +1,19 @@
 class MeetingsController < ApplicationController
 	before_action :authenticate_user!
 	before_action :set_meeting, only: [:show, :edit, :update, :destroy]
+	before_action :set_meetings, only: [:index, :show, :edit]
 	before_action :set_student, only: [:index, :new, :edit]
 
 	def index
-		@meetings = current_user.meetings
+		@upcoming_meetings = current_user.upcoming_meetings
 	end 
 
 	def show 
 	end 
 
 	def new 
-		@meeting = current_user.meetings.build 
+		@meetings = current_user.meetings.select { |m| m.persisted? }
+		@meeting = current_user.meetings.build
 	end
 
 	def create
@@ -19,9 +21,10 @@ class MeetingsController < ApplicationController
 		if @meeting.valid?
 			@meeting.student = current_user.students.find_or_create_by(new_student_params) if new_student_params[:name] != ""
 		    @meeting.save
-			redirect_to meeting_params(@meeting)
+			redirect_to meeting_path
 		else
 			@meeting.user = nil
+			@meetings = current_user.meetings.select { |m| m.persisted? }
 			render :new 
 		end 
 	end 
@@ -31,16 +34,16 @@ class MeetingsController < ApplicationController
 
 	def udpate 
 		if @meeting.update(meeting_params)
-			if new_student_params[:name] != ""
-				@meeting.student = current_user.students.find_or_create_by(new_student_params)
-				@meeting.save 
-			end 
-
-			redirect_to meeting_path(@meeting)
+			redirect_to meetings_path
 		else 
 			set_meetings
 			render :edit 
 		end 
+	end
+
+	def destroy  
+		@meeting.destroy 
+		redirect_to meetings_path 
 	end
 
 	private 

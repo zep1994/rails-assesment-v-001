@@ -19,7 +19,7 @@ class StudentsController < ApplicationController
 		@student = Student.new(student_params)
 		if @student.valid?
 			@student.user = current_user
-			@client.save
+			@student.save
 			redirect_to students_path
 		end 
 	end
