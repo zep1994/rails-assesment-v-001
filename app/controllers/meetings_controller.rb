@@ -10,12 +10,11 @@ class MeetingsController < ApplicationController
 	end 
 
 	def new 
-		@meeting = Meeting.new 
+		@meeting = current_user.meetings.build 
 	end
 
 	def create
-		@meeting = Meeting.new(meeting_params)
-		@meeting.user = current_user
+		@meeting = Meeting.new(meeting_params.merge(user_id: current_user.id))
 		if @meeting.valid?
 			@meeting.student = current_user.students.find_or_create_by(new_student_params) if new_student_params[:name] != ""
 		    @meeting.save
@@ -59,7 +58,7 @@ class MeetingsController < ApplicationController
 	end
 
 	def new_student_params 
-		params.require(:student).permit(:name)
+		params.require(:meeting).permit(:client_id, :duration, :location_id, location_attributes: [:nickname], client_attributes: [:name], meeting_time: time_keys))
 	end 
 
 	def parse_time(array)

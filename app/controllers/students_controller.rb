@@ -8,6 +8,7 @@ class StudentsController < ApplicationController
 	end
 
 	def show 
+		@meetings = @student.meetings
 	end 
 
 	def new 

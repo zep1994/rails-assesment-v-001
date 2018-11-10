@@ -4,15 +4,23 @@ class Meeting < ApplicationRecord
 	belongs_to :user
 	belongs_to :client
 
+	accepts_nested_attributes_for :student
+
 	#validations
 	validates :duration, presence: true, numericality: { greater_than_or_equal_to: 0 }
 	validates :meeting_time, presence: true
-
+	validates :student_id, presence: true
 
 	
 	
 	def student_name 
 		student.name 
+	end 
+
+	def student_attributes=(args)
+		if args[:name] != ""
+			self.student = self.user.students.find_or_create_by(args)
+		end 
 	end 
 
 	def location_name 
@@ -45,7 +53,7 @@ class Meeting < ApplicationRecord
 
 
 	def parse_time(hash)
-		DateTime.parse(hash["date"] + " " + hash["hour"] + ":" + hash["min"])
+		 DateTime.parse(parse_date(hash["date"]) + " " + hash["hour"] + ":" + hash["min"])
 	end  
 
 end
