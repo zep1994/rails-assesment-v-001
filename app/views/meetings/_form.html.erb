@@ -1,13 +1,15 @@
 <%= form_for meeting do |f| %>
+	<div class="field">
 	<p>
 		<%= label_tag :student %>
 		<%= collection_select :meeting, :student_id, current_user.students, :id, :name %>
 	</p>
 	<p>
 		<label>Or create a new student: </label>
-		<%= fields_for :student do |ff| %>
+		<%= fields_for :student, Student.new do |ff| %>
 			<%= ff.text_field :name %>
 		<% end %>
+	</div>
 	</p>
 	<p>
 		<%= label_tag "meeting[meeting_time][date]", "Date: " %>
