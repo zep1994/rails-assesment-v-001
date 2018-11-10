@@ -1,9 +1,11 @@
 <%= form_for meeting do |f| %>
-	<div class="field">
+
 	<p>
 		<%= label_tag :student %>
 		<%= collection_select :meeting, :student_id, current_user.students, :id, :name %>
 	</p>
+	</div>
+	<div class="field">
 	<p>
 		<label>Or create a new student: </label>
 		<%= fields_for :student, Student.new do |ff| %>
@@ -11,15 +13,21 @@
 		<% end %>
 	</div>
 	</p>
+	<div class="field">
 	<p>
 		<%= label_tag "meeting[meeting_time][date]", "Date: " %>
 		<%= date_field_tag "meeting[meeting_time][date]", meeting_date(meeting) %>
 	</p>
+</div>
+<div class="field">
 	<p id="time">
 		<%= label_tag "meeting[meeting_time][date]", "Time: " %>
 		<%= hour_selector("meeting[meeting_time][hour]", meeting) %> : 
 		<%= min_selector("meeting[meeting_time][min]", meeting) %> 
 	</p>
+	</div>
+	<div class="field">
 		 <p><%= f.label :duration %>: <%= duration_field("meeting[duration]") %></p>
+	</div>
 		 <p><%= f.submit %></p>
 	<% end %> 

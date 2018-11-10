@@ -1,0 +1,8 @@
+<%= week_calendar events: meetings do |date, meeting| %>
+  
+  <% meetings.each do |meeting| %>
+    <div class="meeting" style="<%= meeting_position(meeting) %> <%= meeting_height(meeting) %>">
+      <%= link_to("#{meeting.student_name}#{at_location(meeting)}", meeting_path(meeting) ) %>
+    </div>
+  <% end %>
+<% end %> 

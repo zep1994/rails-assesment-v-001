@@ -13,6 +13,10 @@ class Meeting < ApplicationRecord
 
 	
 	
+	def start_time 
+		self.meeting_time 
+	end
+
 	def student_name 
 		student.name 
 	end 
@@ -29,7 +33,7 @@ class Meeting < ApplicationRecord
 
 	def meeting_time=(time)
 		if time.is_a?(Hash)
-			write_attribute(:meeting_time, parse_time(time))
+			write_attribute(:meeting_time, parse_datetime(time))
 		else
 			write_attribute(:meeting_time, time)
 		end
